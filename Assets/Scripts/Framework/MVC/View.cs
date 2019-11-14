@@ -7,14 +7,13 @@ namespace Boking
     public class View : MonoBehaviour
     {
 
-        private readonly string m_ClassName = "View";
-        public string ClassName { get => m_ClassName; }
+        private bool m_NeedRefreshUI;           // 标记是否需要刷新UI
+        private bool m_RefreshedUI;             // 标记UI是否已经刷新过
+        private bool m_IsTransitionCompleted;   // 过渡动画是否已经完成
 
         public ViewController m_Controller;
 
-        public bool m_NeedRefreshUI;    // 标记是否需要刷新UI
-        public bool m_RefreshedUI;      // 标记UI是否已经刷新过
-        public bool m_TransitionCompleted;  // 过渡动画是否已经完成
+        public string ClassName { get => "View"; }
 
         public void Remove()
         {
@@ -35,7 +34,7 @@ namespace Boking
         {
             m_RefreshedUI = false;
             m_NeedRefreshUI = false;
-            m_TransitionCompleted = false;
+            m_IsTransitionCompleted = false;
         }
 
         public void Start()
@@ -46,16 +45,27 @@ namespace Boking
 
             InitClick();
 
-            InitEventListen();
+            InitChildListen();
         }
-        
+
         /// <summary>
-        /// 初始化游戏数据
+        /// 初始化视图
         /// </summary>
         /// <param name="args"></param>
-        public void InitData(object args)
+        public void Init(object args)
         {
 
+        }
+
+        /// <summary>
+        /// 重新对此视图进行初始化
+        /// </summary>
+        /// <param name="args"></param>
+        public void Reinit(object args)
+        {
+            m_RefreshedUI = false;
+            m_NeedRefreshUI = false;
+            m_IsTransitionCompleted = false;
         }
 
         /// <summary>
@@ -83,9 +93,9 @@ namespace Boking
         }
 
         /// <summary>
-        /// 初始化对Model数据变化，派发事件的监听
+        /// 初始化对子节点的事件监听
         /// </summary>
-        public void InitEventListen()
+        public void InitChildListen()
         {
 
         }
@@ -103,7 +113,7 @@ namespace Boking
         /// </summary>
         public void OnTransitionCompleted()
         {
-            m_TransitionCompleted = true;
+            m_IsTransitionCompleted = true;
 
             if (m_NeedRefreshUI)
             {
@@ -113,7 +123,7 @@ namespace Boking
 
         public bool CheckTransitionCompleted()
         {
-            return m_TransitionCompleted;
+            return m_IsTransitionCompleted;
         }
 
         /// <summary>

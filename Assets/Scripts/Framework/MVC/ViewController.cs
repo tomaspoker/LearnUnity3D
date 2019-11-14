@@ -6,14 +6,20 @@ namespace Boking
 {
     public class ViewController
     {
-        private View m_View;
-        public View View { get => m_View; set => m_View = value; }
+        public View SelfView { get; set; }
+
+        /// <summary>
+        /// 视图是否需要常驻内存，如果指定，则打开后就不在释放，除非显式指定
+        /// </summary>
+        public bool IsResident { get; set; }
 
         public ViewController()
         {
-            this.m_View = null;
+            SelfView = null;
 
-            this.InitEvent();
+            IsResident = false;
+
+            InitEvent();
         }
 
         /// <summary>
@@ -22,14 +28,6 @@ namespace Boking
         public void InitEvent()
         {
 
-        }
-
-        public void Show(object args)
-        {
-            if (m_View == null)
-            {
-                this.InitView(args);
-            }
         }
 
         /// <summary>
@@ -47,19 +45,51 @@ namespace Boking
             // this.m_View.InitData(args);
         }
 
+        /// <summary>
+        /// 显示视图
+        /// </summary>
+        /// <param name="args"></param>
+        public void Show(object args)
+        {
+            if (SelfView == null)
+            {
+                InitView(args);
+
+                SelfView.Transition();
+            }
+
+            SelfView.SetActive(true);
+        }
+
+        /// <summary>
+        /// 显示视图，此前视图已经存在
+        /// </summary>
+        /// <param name="args"></param>
+        public void Display(object args)
+        {
+            if (SelfView != null)
+            {
+                SelfView.Reinit(args);
+
+                SelfView.Transition();
+
+                SelfView.SetActive(true);
+            }
+        }
+
         public void Hide()
         {
-            if (m_View)
+            if (SelfView)
             {
-                m_View.SetActive(false);
+                SelfView.SetActive(false);
             }
         }
 
         public void Remove()
         {
-            if (m_View)
+            if (SelfView)
             {
-                m_View.Remove();
+                SelfView.Remove();
             }
         }
     }
