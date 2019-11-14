@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Poking
+namespace Boking
 {
     public class ViewController
     {
@@ -13,13 +13,13 @@ namespace Poking
         {
             this.m_View = null;
 
-            this.InitEventListen();
+            this.InitEvent();
         }
 
         /// <summary>
         /// 初始化模块事件监听
         /// </summary>
-        public void InitEventListen()
+        public void InitEvent()
         {
 
         }
