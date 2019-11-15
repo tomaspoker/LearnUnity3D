@@ -4,13 +4,26 @@ using UnityEngine;
 
 namespace Boking
 {
-    public class ModuleManager : BSingleton<ModuleManager>
+    public class ModuleManager : MonoSingleton<ModuleManager>
     {
         private Dictionary<string, ViewController> m_ControllerDict = new Dictionary<string, ViewController>();
 
         private List<string> m_ShowingList = new List<string>();
 
         private List<string> m_HidingList = new List<string>();
+
+        public void Init()
+        {
+
+        }
+
+        private void Register<T>(string viewName) where T : ViewController, new()
+        {
+            if (!m_ControllerDict.ContainsKey(viewName))
+            {
+                m_ControllerDict.Add(viewName, new T());
+            }
+        }
 
         public bool GetController(string viewName, out ViewController controller)
         {

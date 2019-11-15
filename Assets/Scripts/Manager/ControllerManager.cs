@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Boking
 {
-    public class ControllerManager : BSingleton<ControllerManager>
+    public class ControllerManager : MonoSingleton<ControllerManager>
     {
 
         public Dictionary<string, DialogController> m_DialogControllers = new Dictionary<string, DialogController>();

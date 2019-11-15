@@ -2,14 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BSingleton<T> where T : new()
+public class MonoSingleton<T> : MonoBehaviour where T : MonoBehaviour, new()
 {
     public static T s_Instance;
 
     /// <summary>
     /// 获取实例对象
     /// </summary>
-    public static T Instance {
+    public static T Instance
+    {
         get
         {
             if (s_Instance == null)
@@ -18,5 +19,13 @@ public class BSingleton<T> where T : new()
             }
             return s_Instance;
         }
+    }
+    
+    /// <summary>
+    /// 初始化方法
+    /// </summary>
+    public virtual void Init()
+    {
+
     }
 }

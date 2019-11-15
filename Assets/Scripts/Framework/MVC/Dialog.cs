@@ -17,11 +17,22 @@ namespace Boking
         EVENT   // 需要派发事件，由监听方再次判定是否需要打开弹窗
     }
 
+    public enum DialogStatus
+    {
+        NORMAL, // 正常状态
+        UPWARD  // 上拉状态
+    }
+
     public delegate void DialogCompletedCallback();
     
     public class DialogParams
     {
+        private static int m_DialogId = 0;
+        private static int DialogId => m_DialogId++;
+
         public int Id { get; set; }
+
+        public string Alias { get; set; }
 
         /// <summary>
         /// 弹窗打开类型为指定位置缩放打开时，指定的起始位置
@@ -80,16 +91,30 @@ namespace Boking
         public bool IsNeedRequestData { get; set; }
 
         /// <summary>
+        /// 是否优先显示此弹窗（是否比隐藏的弹窗更优先弹出）
+        /// </summary>
+        public bool IsPriority { get; set; }
+
+        /// <summary>
+        /// 弹窗视图脚本的类名
+        /// </summary>
+        public string DialogClassName { get; set; }
+
+        /// <summary>
+        /// 此弹窗所使用的预制体Prefab
+        /// </summary>
+        public string DialogPrefabPath { get; set; }
+
+        /// <summary>
         /// 弹窗进入动画完成回调
         /// </summary>
         public DialogCompletedCallback ShowCompletedCallback;
 
-        private static int m_DialogId = 0;
-        private static int DialogId => m_DialogId++;
-
         public DialogParams()
         {
             Id = DialogId;
+
+            Alias = "__Unkown__";
 
             InitialPosition = new Vector2();
 
@@ -113,12 +138,20 @@ namespace Boking
 
             IsNeedRequestData = true;
 
+            IsPriority = false;
+
+            DialogClassName = "";
+
+            DialogPrefabPath = "";
+
             ShowCompletedCallback = null;
         }
     }
 
     public class Dialog : MonoBehaviour
     {
+        private DialogCompletedCallback CloseCompletedCallback;
+
         /// <summary>
         /// 标记是否正在执行进入或退出动作
         /// </summary>
@@ -138,22 +171,32 @@ namespace Boking
         /// 此弹窗服务器数据是否请求完成（是否有回包）
         /// </summary>
         public bool m_IsDataLoadingCompleted;
-
+        
+        private DialogParams m_DialogParams;
+        
         /// <summary>
         /// 此弹窗相关的Controller
         /// </summary>
         private DialogController Controller { get => ControllerManager.Instance.GetController(ControllerName); }
 
+        public int Id { get => m_DialogParams.Id; }
+
+        public string Alias { get => m_DialogParams.Alias; }
+
+        public bool IsKeepTop { get => m_DialogParams.IsKeepTop; }
+
+        public bool IsKeepUnique { get => m_DialogParams.IsKeepUnique; }
+
+        public bool IsKeepLock { get => m_DialogParams.IsKeepLock; }
+
+        public bool IsKeepShow { get => m_DialogParams.IsKeepShow; }
+
+        public string DialogClassName { get => m_DialogParams.DialogClassName; }
+
         /// <summary>
         /// 此弹窗相关的Controller的Name
         /// </summary>
         private string ControllerName { get; set; }
-
-        private DialogCompletedCallback CloseCompletedCallback;
-
-
-        private DialogParams m_DialogParams;
-
 
         private void Awake()
         {
@@ -172,6 +215,11 @@ namespace Boking
 
             InitInternationalLanguageUI();
         }
+
+        /// <summary>
+        /// 获取激活状态
+        /// </summary>
+        public bool IsActived => gameObject.activeSelf;
 
         /// <summary>
         /// 设置弹窗打开时的外部传进来的参数
@@ -390,6 +438,13 @@ namespace Boking
             gameObject.SetActive(false);
         }
         
+        /// <summary>
+        /// 移除此界面
+        /// </summary>
+        public void Remove()
+        {
+            Destroy(gameObject);
+        }
     }
 
 }
