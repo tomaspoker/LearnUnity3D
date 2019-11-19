@@ -33,6 +33,11 @@ namespace Boking
             }
         }
 
+        public bool GetController(string controllerName, out DialogController controller)
+        {
+            return m_ControllerDict.TryGetValue(controllerName, out controller);
+        }
+
         public bool GetDialog(int id, out Dialog dialog)
         {
             foreach(Dialog d in m_ShowingList)

@@ -173,11 +173,18 @@ namespace Boking
         public bool m_IsDataLoadingCompleted;
         
         private DialogParams m_DialogParams;
-        
+
         /// <summary>
         /// 此弹窗相关的Controller
         /// </summary>
-        private DialogController Controller { get => ControllerManager.Instance.GetController(ControllerName); }
+        public DialogController Controller
+        {
+            get
+            {
+                DialogManager.Instance.GetController(ControllerName, out DialogController controller);
+                return controller;
+            }
+        }
 
         public int Id { get => m_DialogParams.Id; }
 
@@ -224,7 +231,7 @@ namespace Boking
         /// <summary>
         /// 设置弹窗打开时的外部传进来的参数
         /// </summary>
-        /// <param name="showParams"></param>
+        /// <param name="dialogParams"></param>
         public void SetShowParams(ref DialogParams dialogParams)
         {
             m_DialogParams = dialogParams;

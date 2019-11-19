@@ -145,9 +145,9 @@ namespace Boking
                     else
                     {
                         IsCompleted = true;
-                    }
 
-                    m_CallbackCompleted?.Invoke();
+                        m_CallbackCompleted?.Invoke();
+                    }
                 }
             }
         }

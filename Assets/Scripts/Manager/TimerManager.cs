@@ -7,12 +7,17 @@ namespace Boking
 {
     public class TimerManager : BaseSingleton<TimerManager>
     {
-        private static int s_TimerId = 0;
+        private static int s_TimerId;
         
         /// <summary>
         /// Timer字典
         /// </summary>
         private Dictionary<int, Timer> m_TimerDict = new Dictionary<int, Timer>();
+
+        /// <summary>
+        /// 将要删除的Timer Id列表
+        /// </summary>
+        private List<int> m_RemovingTimerIdList = new List<int>();
 
         private Dictionary<int, MonoBehaviour> m_TimerBehaviourDict = new Dictionary<int, MonoBehaviour>();
 
@@ -53,7 +58,7 @@ namespace Boking
         /// <returns></returns>
         public int Loop(float duration, Action<float, float> process)
         {
-            Timer timer = Timer.Create(duration, true, process);
+            Timer timer = Timer.Create(duration, true, process, duration);
 
             return Register(timer);
         }
@@ -69,11 +74,13 @@ namespace Boking
 
         public void Update()
         {
+            m_RemovingTimerIdList.Clear();
+
             foreach(KeyValuePair<int, Timer> vk in m_TimerDict)
             {
                 if (vk.Value.IsCompleted)
                 {
-                    Remove(vk.Key);
+                    m_RemovingTimerIdList.Add(vk.Key);
                 }
                 else if (vk.Value.IsPaused)
                 {
@@ -83,6 +90,11 @@ namespace Boking
                 {
                     vk.Value.Update();
                 }
+            }
+
+            foreach(int id in m_RemovingTimerIdList)
+            {
+                Remove(id);
             }
         }
 
