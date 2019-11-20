@@ -21,9 +21,9 @@ namespace Boking
             Text lblCountDown = m_LblCountDown.GetComponent<Text>();
             lblCountDown.text = "";
 
-            TimerManager.Instance.CountDown(5f, () =>
+            TimerManager.Instance.Delay(5f, () =>
             {
-                lblCountDown.text = "CountDown-Completed";
+                lblCountDown.text = "Delay-Completed";
             });
 
             Text lblClock = m_LblClock.GetComponent<Text>();

@@ -29,7 +29,7 @@ namespace Boking
         /// <param name="duration">需要倒计时的时间</param>
         /// <param name="completed">倒计时完成时的回调</param>
         /// <returns></returns>
-        public int CountDown(float duration, Action completed)
+        public int Delay(float duration, Action completed)
         {
             Timer timer = Timer.Create(duration, completed);
 
