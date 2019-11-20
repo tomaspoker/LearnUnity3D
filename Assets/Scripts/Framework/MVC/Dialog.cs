@@ -27,8 +27,8 @@ namespace Boking
     
     public class DialogParams
     {
-        private static int m_DialogId = 0;
-        private static int DialogId => m_DialogId++;
+        private static int s_DialogId;
+        private static int DialogId => s_DialogId++;
 
         public int Id { get; set; }
 
@@ -68,22 +68,22 @@ namespace Boking
         /// 此弹窗是否保持在最上层
         /// 如果有两个弹窗同时声明，则后来者居上
         /// </summary>
-        public bool IsKeepTop { get; set; }
+        public bool IsTop { get; set; }
 
         /// <summary>
         /// 此弹窗是否一直显示
         /// </summary>
-        public bool IsKeepShow { get; set; }
+        public bool IsAlwaysShow { get; set; }
 
         /// <summary>
         /// 此弹窗是否被锁定了，如果是，则不能进行其他操作，比如上拉弹窗层
         /// </summary>
-        public bool IsKeepLock { get; set; }
+        public bool IsLocked { get; set; }
 
         /// <summary>
         /// 此弹窗是否唯一
         /// </summary>
-        public bool IsKeepUnique { get; set; }
+        public bool IsUnique { get; set; }
 
         /// <summary>
         /// 此弹窗是否需要从服务器请求数据
@@ -93,7 +93,7 @@ namespace Boking
         /// <summary>
         /// 是否优先显示此弹窗（是否比隐藏的弹窗更优先弹出）
         /// </summary>
-        public bool IsPriority { get; set; }
+        public bool IsPrior { get; set; }
 
         /// <summary>
         /// 弹窗视图脚本的类名
@@ -128,17 +128,17 @@ namespace Boking
 
             ShowType = DialogShowType.NORMAL;
 
-            IsKeepTop = false;
+            IsTop = false;
 
-            IsKeepShow = false;
+            IsAlwaysShow = false;
 
-            IsKeepLock = false;
+            IsLocked = false;
 
-            IsKeepUnique = true;
+            IsUnique = true;
 
             IsNeedRequestData = true;
 
-            IsPriority = false;
+            IsPrior = false;
 
             DialogClassName = "";
 
@@ -190,13 +190,13 @@ namespace Boking
 
         public string Alias { get => m_DialogParams.Alias; }
 
-        public bool IsKeepTop { get => m_DialogParams.IsKeepTop; }
+        public bool IsTop { get => m_DialogParams.IsTop; }
 
-        public bool IsKeepUnique { get => m_DialogParams.IsKeepUnique; }
+        public bool IsUnique { get => m_DialogParams.IsUnique; }
 
-        public bool IsKeepLock { get => m_DialogParams.IsKeepLock; }
+        public bool IsLock { get => m_DialogParams.IsLocked; }
 
-        public bool IsKeepShow { get => m_DialogParams.IsKeepShow; }
+        public bool IsAlwaysShow { get => m_DialogParams.IsAlwaysShow; }
 
         public string DialogClassName { get => m_DialogParams.DialogClassName; }
 

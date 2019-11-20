@@ -104,7 +104,7 @@ namespace Boking
         /// </summary>
         /// <param name="stay"></param>
         /// <returns></returns>
-        public bool CheckCanPop(bool stay)
+        public bool CanPop(bool stay)
         {
             if (m_WaittingList.Count <= 0)
             {
@@ -121,9 +121,9 @@ namespace Boking
                     }
                 }
 
-                if (dialog.IsActived && dialog.IsKeepTop)
+                if (dialog.IsActived && dialog.IsTop)
                 {
-                    if (!m_WaittingList[0].IsKeepTop)
+                    if (!m_WaittingList[0].IsTop)
                     {
                         return false;
                     }
@@ -139,7 +139,7 @@ namespace Boking
         /// <param name="stay">是否需要延迟打开</param>
         public void Pop(bool stay = false)
         {
-            if (CheckCanPop(stay))
+            if (CanPop(stay))
             {
                 DialogParams dialogParams = m_WaittingList[0];
 
@@ -166,7 +166,7 @@ namespace Boking
             if (m_ShowingList.Count > 0)
             {
                 Dialog dialog = m_ShowingList[m_ShowingList.Count - 1];
-                if (!dialog.IsKeepShow)
+                if (!dialog.IsAlwaysShow)
                 {
                     dialog.Hide();
                 }
@@ -179,7 +179,7 @@ namespace Boking
             {
                 for (int i = 0; i < m_ShowingList.Count; i++)
                 {
-                    if (m_ShowingList[i].DialogClassName == dialogParams.DialogClassName && dialogParams.IsKeepUnique)
+                    if (m_ShowingList[i].DialogClassName == dialogParams.DialogClassName && dialogParams.IsUnique)
                     {
                         // 移除此弹窗，序号i
 
@@ -263,16 +263,16 @@ namespace Boking
 
             m_ShowingList.Clear();
 
-            CheckAndRemoveBackground();
+            RemoveBackgroundIfNoDialog();
         }
 
         private void Check()
         {
-            if (m_ShowingList.Count > 0 && m_ShowingList[m_ShowingList.Count - 1].IsKeepTop)
+            if (m_ShowingList.Count > 0 && m_ShowingList[m_ShowingList.Count - 1].IsTop)
             {
                 m_ShowingList[m_ShowingList.Count - 1].Display();
             }
-            else if (m_WaittingList.Count > 0 &&  m_WaittingList[0].IsPriority)
+            else if (m_WaittingList.Count > 0 && m_WaittingList[0].IsPrior)
             {
                 Prepare();
             }
@@ -286,7 +286,7 @@ namespace Boking
             }
             else
             {
-                CheckAndRemoveBackground();
+                RemoveBackgroundIfNoDialog();
             }
         }
 
@@ -307,10 +307,11 @@ namespace Boking
             });
         }
 
-        private void CheckAndRemoveBackground()
+        private void RemoveBackgroundIfNoDialog()
         {
 
         }
+
     }
 
 }
