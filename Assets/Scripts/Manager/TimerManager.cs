@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Boking
 {
-    public class TimerManager : BaseSingleton<TimerManager>
+    public class TimerManager : Singleton<TimerManager>
     {
         private static int s_TimerId;
         
@@ -22,6 +22,11 @@ namespace Boking
         private Dictionary<int, MonoBehaviour> m_TimerBehaviourDict = new Dictionary<int, MonoBehaviour>();
 
         private int TimerId => s_TimerId++;
+
+        private TimerManager()
+        {
+
+        }
 
         /// <summary>
         /// 倒计时

@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace Boking
 {
-    public class DialogManager : MonoSingleton<DialogManager>
+    public class DialogManager : Singleton<DialogManager>
     {
         private Dictionary<string, DialogController> m_ControllerDict = new Dictionary<string, DialogController>();
 
@@ -19,7 +19,12 @@ namespace Boking
         private bool m_IsDelayingPrepare;
 
         public bool IsUpwardEnabled { get; set; }  // 是否可以执行上拉操作
-        
+
+        private DialogManager()
+        {
+
+        }
+
         public override void Init()
         {
 
@@ -187,7 +192,7 @@ namespace Boking
 
         private void Show(ref DialogParams dialogParams)
         {
-            GameObject gameObject = GameObject.Instantiate(new GameObject());
+            GameObject gameObject = UnityEngine.Object.Instantiate(new GameObject());
 
             Type type = Type.GetType("Boking." + dialogParams.DialogClassName);
 
@@ -292,18 +297,14 @@ namespace Boking
                 return;
             }
 
-            StartCoroutine(DelayPrepare());
-        }
-
-        private IEnumerator DelayPrepare()
-        {
             m_IsDelayingPrepare = true;
 
-            yield return new WaitForEndOfFrame();
+            TimerManager.Instance.Delay(0, () =>
+            {
+                m_IsDelayingPrepare = false;
 
-            m_IsDelayingPrepare = false;
-
-            Pop();
+                Pop();
+            });
         }
 
         private void CheckAndRemoveBackground()

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Boking
 {
-    public class ModuleManager : MonoSingleton<ModuleManager>
+    public class ViewManager : Singleton<ViewManager>
     {
         private Dictionary<string, ViewController> m_ControllerDict = new Dictionary<string, ViewController>();
 
@@ -12,7 +12,12 @@ namespace Boking
 
         private List<string> m_HidingList = new List<string>();
 
-        public void Init()
+        private ViewManager()
+        {
+
+        }
+
+        public override void Init()
         {
 
         }

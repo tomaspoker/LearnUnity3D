@@ -2,17 +2,62 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UpdateManager : MonoBehaviour
+namespace Boking
 {
-    // Start is called before the first frame update
-    void Start()
+
+    public class LifeCycleManager : Singleton<LifeCycleManager>
     {
-        
+        private LifeCycleManager()
+        {
+
+        }
+
+        public override void Init()
+        {
+
+        }
+
+
+        public void Update()
+        {
+
+        }
+
+        public void FixedUpdate()
+        {
+
+        }
+
+        public void Pause()
+        {
+
+        }
+
+        public void Resume()
+        {
+
+        }
+
+        public void Destory()
+        {
+
+        }
+
+        /// <summary>
+        /// 游戏切到后台
+        /// </summary>
+        public void OnBackground()
+        {
+
+        }
+
+        /// <summary>
+        /// 游戏切到前台
+        /// </summary>
+        public void OnForeground()
+        {
+
+        }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
