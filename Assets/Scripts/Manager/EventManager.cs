@@ -6,7 +6,7 @@ namespace Boking
 {
     public class EventManager : Singleton<EventManager>
     {
-        private EventProtocol m_Event = new EventProtocol();
+        private readonly EventProtocol m_Event = new EventProtocol();
 
         private EventManager()
         {

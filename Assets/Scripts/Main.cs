@@ -43,6 +43,33 @@ namespace Boking
                 lblLoop.text = "Loop - " + elapsedTime.ToString();
             });
 
+            CacheManager.Instance.Set<int>(1, 2);
+            CacheManager.Instance.Set<int>(2, 10);
+            CacheManager.Instance.Set<string>(3, "v1");
+
+            print(CacheManager.Instance.Get<int>(1));
+            print(CacheManager.Instance.Get<int>(2));
+            print(CacheManager.Instance.Get<string>(3));
+
+            EventManager.Instance.AddEvent(1, UpdateEvent);
+            EventManager.Instance.AddEvent(1, UpdateEvent2);
+
+            EventManager.Instance.DispatchEvent(1);
+
+            EventManager.Instance.RemoveEvent(1, UpdateEvent);
+
+            EventManager.Instance.DispatchEvent(1);
+
+        }
+
+        public void UpdateEvent(params object[] args)
+        {
+            print("==UpdateEvent==");
+        }
+
+        public void UpdateEvent2(params object[] args)
+        {
+            print("==UpdateEvent2==");
         }
 
         // Update is called once per frame

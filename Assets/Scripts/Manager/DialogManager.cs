@@ -204,7 +204,7 @@ namespace Boking
 
             m_ShowingList.Add(dialog);
 
-            dialog.RequesttDData();
+            dialog.RequestData();
 
             dialog.Show();
         }

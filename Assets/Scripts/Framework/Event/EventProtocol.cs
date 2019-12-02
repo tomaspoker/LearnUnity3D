@@ -20,9 +20,9 @@ namespace Boking
     {
         private class ListenerWrapper
         {
-            private List<EventListener> m_ListenerList = new List<EventListener>();
+            private readonly List<EventListener> m_ListenerList = new List<EventListener>();
 
-            private int Key { get; }
+            public int Key { get; }
 
             public ListenerWrapper(int key)
             {
@@ -48,7 +48,7 @@ namespace Boking
             }
         }
 
-        private Dictionary<int, ListenerWrapper> m_EventDict = new Dictionary<int, ListenerWrapper>();
+        private readonly Dictionary<int, ListenerWrapper> m_EventDict = new Dictionary<int, ListenerWrapper>();
 
         public void AddEvent(int key, EventListener listener)
         {
