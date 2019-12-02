@@ -294,7 +294,7 @@ namespace Boking
 
             if (m_IsDataLoadingCompleted)
             {
-                RefreshUI();
+                UpdateUI();
             }
 
             m_DialogParams.ShowCompletedCallback?.Invoke();
@@ -379,22 +379,22 @@ namespace Boking
 
             if (m_IsEnterCompleted)
             {
-                RefreshUI();
+                UpdateUI();
             }
         }
 
         /// <summary>
         /// 请求此界面的服务器数据
         /// </summary>
-        public void RequestServerData()
+        public void RequestData()
         {
 
         }
 
         /// <summary>
-        /// 刷新界面UI
+        /// 更新界面UI
         /// </summary>
-        public void RefreshUI()
+        public void UpdateUI()
         {
 
         }
